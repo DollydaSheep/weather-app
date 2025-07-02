@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "node-fetch": "^3.3.2",
+    "nominatim-client": "^3.2.1",
     "openmeteo": "^1.2.0"
   }
 }

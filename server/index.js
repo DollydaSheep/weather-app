@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors')
 const {fetchWeatherApi} = require('openmeteo');
 
+
 const port = 3000;
 
 const app = express();
@@ -22,6 +23,7 @@ app.get('/weather',async (req,res)=>{
         "longitude": long,
         "daily": ["precipitation_probability_max", "weather_code", "temperature_2m_max", "temperature_2m_min"],
         "hourly": ["temperature_2m", "precipitation_probability"],
+        "current": ["temperature_2m", "precipitation"],
         "timezone": "Asia/Singapore"
     };
     const url = "https://api.open-meteo.com/v1/forecast";
@@ -35,10 +37,16 @@ app.get('/weather',async (req,res)=>{
     const latitude = response.latitude();
     const longitude = response.longitude();
 
+    const current = response.current();
     const hourly = response.hourly();
     const daily = response.daily();
 
     const weatherData = {
+        current: {
+            time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
+            temperature2m: current.variables(0).value(),
+            precipitation: current.variables(1).value(),
+        },
         hourly: {
             time: [...Array((Number(hourly.timeEnd()) - Number(hourly.time())) / hourly.interval())].map(
                 (_, i) => new Date((Number(hourly.time()) + i * hourly.interval() + utcOffsetSeconds) * 1000)
@@ -75,7 +83,25 @@ app.get('/weather',async (req,res)=>{
         );
     }
 
-    res.status(200).json({data:responses});
+    res.status(200).json({data: weatherData});
+})
+
+app.get('/searchresult', async (req,res)=>{
+
+    const query = req.query.value
+
+    console.log(req.query.value)
+    try{
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5&addressdetails=1`)
+        
+        const data = await response.json()
+
+        res.status(200).json(data);
+
+        console.log(data);
+    }catch(err){
+        console.error(err)
+    }
 })
 
 
