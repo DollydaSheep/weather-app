@@ -13,6 +13,14 @@ function App() {
 
   const[weatherData,setWeatherData] = useState();
   const[searchResults,setSearchResults] = useState();
+  const[latLong,setLatLong] = useState();
+  const[displayName,setDisplayName] = useState();
+
+  const handleSearchResultClick = (searchName,lat,lon) => {
+    setSearchResults(null);
+    setLatLong([lat,lon]);
+    setDisplayName(searchName);
+  }
   
   const handleSearchValue = async (e) => {
     if(e.key == 'Enter'){
@@ -33,7 +41,13 @@ function App() {
   useEffect(()=>{
     const fetchWeather = async () =>{
       try{
-        const res = await fetch('http://localhost:3000/weather?lat=52.52&long=13.41');
+        let res
+        if(latLong){
+          res = await fetch(`http://localhost:3000/weather?lat=${latLong[0]}&long=${latLong[1]}`);
+        }else{
+          res = await fetch(`http://localhost:3000/weather?lat=52.52&long=13.41`);
+        }
+        
 
         const data = await res.json()
 
@@ -44,7 +58,7 @@ function App() {
       }
     }
     fetchWeather();
-  },[])
+  },[latLong])
 
   if(!weatherData){
     return(
@@ -71,8 +85,8 @@ function App() {
       <div className='flex w-screen h-screen p-0'>
         <Sidebar />
         <section className='w-5/9'>
-          <SearchBar handleSearchValue={handleSearchValue} searchResults={searchResults} onOutsideClick={()=>setSearchResults(null)}/>
-          <Hero temperature={weatherData.data.current.temperature2m} rainChance={weatherData.data.current.precipitation}/>
+          <SearchBar handleSearchValue={handleSearchValue} searchResults={searchResults} onOutsideClick={()=>setSearchResults(null)} handleSearchResultClick={handleSearchResultClick}/>
+          <Hero temperature={weatherData.data.current.temperature2m} rainChance={weatherData.data.current.precipitation} displayName={displayName}/>
           
           <TodayForecast />
           <WeatherDetails />

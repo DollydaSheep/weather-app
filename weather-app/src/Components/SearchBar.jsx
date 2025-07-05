@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect,useRef } from 'react'
 
-const SearchBar = ({handleSearchValue, searchResults, onOutsideClick}) => {
+const SearchBar = ({handleSearchValue, searchResults, onOutsideClick, handleSearchResultClick}) => {
 
   const divRef = useRef(null);
 
@@ -34,7 +34,7 @@ const SearchBar = ({handleSearchValue, searchResults, onOutsideClick}) => {
       {searchResults && (
         <div ref={divRef} className='w-full h-32 mx-4 absolute -bottom-34 rounded-xl overflow-auto'>
             {Object.entries(searchResults).map((r,index)=>(
-              <div className='h-12 w-full bg-gray-600 grid grid-cols-4 gap-4 items-center p-2 hover:bg-gray-500 cursor-pointer'>
+              <div className='h-12 w-full bg-gray-600 grid grid-cols-4 gap-4 items-center p-2 hover:bg-gray-500 cursor-pointer' onClick={()=>handleSearchResultClick(r[1].name,r[1].lat,r[1].lon)}>
                 <div className='col-span-2 flex flex-col justify-center items-start mr-2'>
                   <h1 className='text-lg ml-4'>{r[1].name}</h1>
                   <p className='text-xs ml-4 text-gray-400 truncate text-ellipsis w-full'>{r[1].display_name}</p>
