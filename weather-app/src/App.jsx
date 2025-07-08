@@ -88,11 +88,11 @@ function App() {
           <SearchBar handleSearchValue={handleSearchValue} searchResults={searchResults} onOutsideClick={()=>setSearchResults(null)} handleSearchResultClick={handleSearchResultClick}/>
           <Hero temperature={weatherData.data.current.temperature2m} rainChance={weatherData.data.current.precipitation} displayName={displayName}/>
           
-          <TodayForecast />
+          <TodayForecast weatherData={weatherData ? weatherData.data.hourly : ""}/>
           <WeatherDetails />
         </section>
         <div className='m-4'></div>
-        <WeekForecast />
+        <WeekForecast weatherData={weatherData ? weatherData.data.daily : ""}/>
       </div>
       
     </>

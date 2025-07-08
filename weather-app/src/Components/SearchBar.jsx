@@ -32,7 +32,7 @@ const SearchBar = ({handleSearchValue, searchResults, onOutsideClick, handleSear
               placeholder='Search for Cities' onKeyDown={(e)=>handleSearchValue(e)}/>
       </div>
       {searchResults && (
-        <div ref={divRef} className='w-full h-32 mx-4 absolute -bottom-34 rounded-xl overflow-auto'>
+        <div ref={divRef} className='w-full h-32 mx-4 absolute -bottom-34 rounded-xl overflow-auto z-50'>
             {Object.entries(searchResults).map((r,index)=>(
               <div className='h-12 w-full bg-gray-600 grid grid-cols-4 gap-4 items-center p-2 hover:bg-gray-500 cursor-pointer' onClick={()=>handleSearchResultClick(r[1].name,r[1].lat,r[1].lon)}>
                 <div className='col-span-2 flex flex-col justify-center items-start mr-2'>
