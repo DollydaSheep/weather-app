@@ -68,7 +68,6 @@ function App() {
           <section className='w-5/9'>
             <SearchBar />
             <Hero />
-            
             <TodayForecast />
             <WeatherDetails />
           </section>
@@ -86,7 +85,7 @@ function App() {
         <Sidebar />
         <section className='w-5/9'>
           <SearchBar handleSearchValue={handleSearchValue} searchResults={searchResults} onOutsideClick={()=>setSearchResults(null)} handleSearchResultClick={handleSearchResultClick}/>
-          <Hero temperature={weatherData.data.current.temperature2m} rainChance={weatherData.data.current.precipitation} displayName={displayName}/>
+          <Hero temperature={weatherData.data.current.temperature2m} rainChance={weatherData.data.current.precipitation} displayName={displayName} weatherCode={weatherData.data.current.weatherCode}/>
           
           <TodayForecast weatherData={weatherData ? weatherData.data.hourly : ""}/>
           <WeatherDetails />

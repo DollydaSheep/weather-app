@@ -22,8 +22,8 @@ app.get('/weather',async (req,res)=>{
         "latitude": lat,
         "longitude": long,
         "daily": ["precipitation_probability_max", "weather_code", "temperature_2m_max", "temperature_2m_min"],
-        "hourly": ["temperature_2m", "precipitation_probability"],
-        "current": ["temperature_2m", "precipitation"],
+        "hourly": ["temperature_2m", "precipitation_probability", "weather_code"],
+        "current": ["temperature_2m", "precipitation", "weather_code"],
         "timezone": "Asia/Singapore"
     };
     const url = "https://api.open-meteo.com/v1/forecast";
@@ -46,6 +46,7 @@ app.get('/weather',async (req,res)=>{
             time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
             temperature2m: current.variables(0).value(),
             precipitation: current.variables(1).value(),
+            weatherCode: current.variables(2).value()
         },
         hourly: {
             time: [...Array((Number(hourly.timeEnd()) - Number(hourly.time())) / hourly.interval())].map(
@@ -53,6 +54,7 @@ app.get('/weather',async (req,res)=>{
             ),
             temperature2m: hourly.variables(0).valuesArray(),
             precipitationProbability: hourly.variables(1).valuesArray(),
+            weatherCode: hourly.variables(2).valuesArray(),
         },
         daily: {
             time: [...Array((Number(daily.timeEnd()) - Number(daily.time())) / daily.interval())].map(
