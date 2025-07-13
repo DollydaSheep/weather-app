@@ -35,6 +35,10 @@ const weatherCodeMap = {
         image: "https://img.icons8.com/?size=100&id=4o2mr7Gsq2FN&format=png&color=000000",
         label: "Light Showers"
     },
+    81: {
+        image: "https://img.icons8.com/?size=100&id=4o2mr7Gsq2FN&format=png&color=000000",
+        label: "Showers",
+    },
     95: {
         image: "https://img.icons8.com/?size=100&id=NVU34HoNVjmR&format=png&color=000000",
         label: "Thunderstorm"
