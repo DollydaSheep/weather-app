@@ -15,6 +15,7 @@ function App() {
   const[searchResults,setSearchResults] = useState();
   const[latLong,setLatLong] = useState();
   const[displayName,setDisplayName] = useState();
+  const[daySelected,setDaySelected] = useState(0);
 
   const handleSearchResultClick = (searchName,lat,lon) => {
     setSearchResults(null);
@@ -69,7 +70,7 @@ function App() {
             <SearchBar />
             <Hero />
             <TodayForecast />
-            <WeatherDetails />
+            <WeatherDetails weatherData={""}/>
           </section>
           <div className='m-4'></div>
           <WeekForecast />
@@ -87,11 +88,11 @@ function App() {
           <SearchBar handleSearchValue={handleSearchValue} searchResults={searchResults} onOutsideClick={()=>setSearchResults(null)} handleSearchResultClick={handleSearchResultClick}/>
           <Hero temperature={weatherData.data.current.temperature2m} rainChance={weatherData.data.current.precipitation} displayName={displayName} weatherCode={weatherData.data.current.weatherCode}/>
           
-          <TodayForecast weatherData={weatherData ? weatherData.data.hourly : ""}/>
-          <WeatherDetails />
+          <TodayForecast weatherData={weatherData ? weatherData.data.hourly : ""} daySelected={daySelected}/>
+          <WeatherDetails weatherData={weatherData ? weatherData.data.hourly : ""} daySelected={daySelected}/>
         </section>
         <div className='m-4'></div>
-        <WeekForecast weatherData={weatherData ? weatherData.data.daily : ""}/>
+        <WeekForecast weatherData={weatherData ? weatherData.data.daily : ""} setDaySelected={setDaySelected} daySelected={daySelected} />
       </div>
       
     </>

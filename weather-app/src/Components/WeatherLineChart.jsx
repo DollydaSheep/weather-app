@@ -62,18 +62,18 @@ const MyLine = ({ data }) => (
     />
 )
 
-const WeatherLineChart = () => {
+const WeatherLineChart = ({temp ,daySelected}) => {
 
   const data = [
     {
       id: 'Temperature',
       data: [
-        { x: '6:00 AM', y: 17 },
-        { x: '9:00 AM', y: 15 },
-        { x: '12:00 PM', y: 14 },
-        { x: '3:00 PM', y: 17 },
-        { x: '6:00 PM', y: 20 },
-        { x: '9:00 PM', y: 23 },
+        { x: '6:00 AM', y: temp ? temp[(24 * daySelected) + 6].toFixed(0) : "" },
+        { x: '9:00 AM', y: temp ? temp[(24 * daySelected) + 9].toFixed(0) : "" },
+        { x: '12:00 PM', y: temp ? temp[(24 * daySelected) + 12].toFixed(0) : "" },
+        { x: '3:00 PM', y: temp ? temp[(24 * daySelected) + 15].toFixed(0) : "" },
+        { x: '6:00 PM', y: temp ? temp[(24 * daySelected) + 18].toFixed(0) : "" },
+        { x: '9:00 PM', y: temp ? temp[(24 * daySelected) + 21].toFixed(0) : "" },
       ],
     },
   ]
